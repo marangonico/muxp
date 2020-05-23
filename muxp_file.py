@@ -1,4 +1,4 @@
-# muxp_file.py    Version: 0.1.7 exp
+# muxp_file.py    Version: 0.2.0 exp
 #        
 # ---------------------------------------------------------
 # Python Class for handling muxp-files.
@@ -19,10 +19,7 @@
 #
 #******************************************************************************
 
-#Change since 0.1.3: marked 3d coordinates as non swapped
-#Change since 0.1.4: Corrected eror to error in line 130
-#Change since 0.1.6: Added function findDSFmeshFiles
-#                    Added function to retrieve and evalute dsf properties
+#Change for 0.2.0:  Corrected that NEW Sceneries will be identified by findDSFfiles
 
 from logging import getLogger
 from os import path, replace, walk
@@ -320,10 +317,10 @@ def findDSFmeshFiles(tile, xpfolder):
             props = getDSFproperties(dsf_file)
             if not 'sim/overlay' in props.keys():
             #if not isDSFoverlay(dsf_file): ### OLDER FUNCTION, TO BE REMOVED
-                packs["Custom Scenery/"+scenery] = "New" #for the moment each found scenery is new
+                packs["Custom Scenery/"+scenery] = "NEW" #for the moment each found scenery is new
             elif props["sim/overlay"] == '0': #In case such a definition would exist.....
-                packs["Custom Scenery/"+scenery] = "New" #for the moment each found scenery is new
-    
+                packs["Custom Scenery/"+scenery] = "NEW" #for the moment each found scenery is new
+
     if not path.exists(inifile):
         return packs #Without inifile all packs are returned as New
                 
@@ -344,7 +341,7 @@ def findDSFmeshFiles(tile, xpfolder):
                         packs[scenery] = "PACK"
 
     sorted_packs = dict()
-    for scentype in ["ACTIVE", "PACK", "DEFAULT", "DISABLED"]:
+    for scentype in ["NEW", "ACTIVE", "PACK", "DEFAULT", "DISABLED"]:
         for scen in packs.keys():
             if packs[scen] == scentype:
                 sorted_packs[scen] = scentype        
