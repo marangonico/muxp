@@ -5,3 +5,5 @@
 /muxp.spec
 /dist/
 /build/
+/*.kml
+/Earth nav data/
